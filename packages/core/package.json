@@ -5,11 +5,19 @@
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
-  "exports": { ".": "./src/index.ts", "./*": "./src/*" },
+  "exports": {
+    ".": "./src/index.ts",
+    "./platform.web": "./src/platform.web.ts",
+    "./fixtures/normalize.json": "./fixtures/normalize.json",
+    "./*": "./src/*"
+  },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {},
-  "devDependencies": {"vitest":"5.0.3","typescript":"5.9.3"}
+  "devDependencies": {
+    "vitest": "5.0.3",
+    "typescript": "5.9.3"
+  }
 }

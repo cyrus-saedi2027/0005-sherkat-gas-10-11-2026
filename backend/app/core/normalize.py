@@ -38,14 +38,14 @@ def normalize_mobile(s: str | None) -> str | None:
         if t.startswith(prefix) and len(t) - len(prefix) == 10:
             t = t[len(prefix):]
             break
-    return "0" + t if re.fullmatch(r"9\d{9}", t) else None
+    return "0" + t if re.fullmatch(r"9[0-9]{9}", t) else None
 
 
 def normalize_subscription(s: str | None) -> str | None:
     if s is None:
         return None
     t = _SUB_JUNK.sub("", to_ascii_digits(str(s)))
-    return t if re.fullmatch(r"\d{4,20}", t) else None
+    return t if re.fullmatch(r"[0-9]{4,20}", t) else None
 
 
 def mask_mobile(m: str | None) -> str:

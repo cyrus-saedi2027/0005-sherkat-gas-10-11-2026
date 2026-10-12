@@ -5,8 +5,16 @@ from fastapi import APIRouter, Request, Response
 from app.core.deps import DB
 from app.modules.auth import service
 from app.modules.auth.router_common import token_response
-from app.modules.auth.schemas import (LoginOtpStartIn, LoginPasswordIn, OtpChallengeOut, OtpVerifyIn, SignupCompleteIn,
-                                      SignupStartIn, SignupVerifyOut, TokenOut)
+from app.modules.auth.schemas import (
+    LoginOtpStartIn,
+    LoginPasswordIn,
+    OtpChallengeOut,
+    OtpVerifyIn,
+    SignupCompleteIn,
+    SignupStartIn,
+    SignupVerifyOut,
+    TokenOut,
+)
 
 router = APIRouter(prefix="/auth", tags=["app:auth"])
 

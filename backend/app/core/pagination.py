@@ -13,7 +13,7 @@ T = TypeVar("T")
 MAX_PAGE_SIZE = 100
 
 
-class Page(BaseModel, Generic[T]):
+class Page(BaseModel, Generic[T]):  # noqa: UP046 — pydantic generic models need Generic
     items: list[T]
     total: int
     page: int

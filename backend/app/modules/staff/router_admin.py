@@ -10,10 +10,17 @@ from app.core.deps import DB, StaffCtx, require
 from app.core.errors import AppError
 from app.core.normalize import normalize_text
 from app.core.pagination import Page, PageParams, page_params, paginate
-from app.core.rbac import P, ROLE_FA, ROLE_PERMISSIONS, Role
+from app.core.rbac import ROLE_FA, ROLE_PERMISSIONS, P, Role
 from app.modules.staff import service
 from app.modules.staff.models import StaffUser
-from app.modules.staff.schemas import AccessReviewIn, ResetPasswordIn, RoleOut, StaffCreate, StaffOut, StaffUpdate
+from app.modules.staff.schemas import (
+    AccessReviewIn,
+    ResetPasswordIn,
+    RoleOut,
+    StaffCreate,
+    StaffOut,
+    StaffUpdate,
+)
 
 router = APIRouter(prefix="/staff", tags=["admin:staff"])
 

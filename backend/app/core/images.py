@@ -16,7 +16,7 @@ try:  # HEIC from iPhones
     import pillow_heif
 
     pillow_heif.register_heif_opener()
-except Exception:  # pragma: no cover - optional codec
+except Exception:  # noqa: S110 — pragma: no cover; HEIC codec is optional
     pass
 
 MAX_PIXELS = 40_000_000

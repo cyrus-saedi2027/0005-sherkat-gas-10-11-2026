@@ -13,8 +13,16 @@ from app.core.rbac import P
 from app.modules.points import service
 from app.modules.points.models import PointsLedger, PointsRule
 from app.modules.points.router_app import ledger_out
-from app.modules.points.schemas import (AdjustIn, BalanceOut, LedgerOut, LedgerPage, RuleOut, RuleUpdate,
-                                        SuspendIn, UnsuspendIn)
+from app.modules.points.schemas import (
+    AdjustIn,
+    BalanceOut,
+    LedgerOut,
+    LedgerPage,
+    RuleOut,
+    RuleUpdate,
+    SuspendIn,
+    UnsuspendIn,
+)
 
 router = APIRouter(prefix="/points", tags=["admin:points"])
 

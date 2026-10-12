@@ -1,0 +1,396 @@
+/* ─────────────────────────────────────────────────────────────
+ *  Gazyar global stylesheet — import once per app:
+ *      import "@gazyar/ui/styles.css";
+ *
+ *  Holds what CSS Modules cannot: @font-face, the token custom
+ *  properties, the reset, keyframes and the reduced-motion switch.
+ *  Colours (--c-*) are NOT here: ThemeProvider/bootTheme writes them
+ *  onto <html> from the typed palette, before first paint.
+ *  `dir`/`lang` on <html> are set by each app's index.html.
+ * ───────────────────────────────────────────────────────────── */
+
+/* ── font: Vazirmatn, self-hosted ─────────────────────────────
+   Not from a CDN: the subscriber base is on mobile data that is slow
+   and sometimes filtered, and a font that fails to load drops Persian
+   to a fallback that reads badly. Four static weights (≈200KB total)
+   rather than the variable file: the UI only uses 400/500/700/800, and
+   static files are cached separately so the first screen only waits
+   for the weights it paints. Paths are relative to this file so Vite
+   fingerprints and bundles them; they resolve through the package's
+   own node_modules/vazirmatn. */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../../node_modules/vazirmatn/fonts/webfonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../../node_modules/vazirmatn/fonts/webfonts/Vazirmatn-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../../node_modules/vazirmatn/fonts/webfonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../../node_modules/vazirmatn/fonts/webfonts/Vazirmatn-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── tokens (mirrors tokens.ts — tokens.test.ts fails on drift) ── */
+:root {
+  --r-badge: 7px;
+  --r-tag: 9px;
+  --r-icon: 14px;
+  --r-field: 14px;
+  --r-row: 18px;
+  --r-tile: 18px;
+  --r-card: 22px;
+  --r-sheet: 30px;
+  --r-panel: 42px;
+  --r-pill: 999px;
+  --sh-card: 0 14px 28px -20px var(--c-shadow);
+  --sh-soft: 0 6px 14px -10px var(--c-shadow);
+  --sh-lifted: 0 22px 40px -18px var(--c-shadowStrong);
+  --sh-sheet: 0 -14px 36px -18px var(--c-shadowStrong);
+  --sh-nav: 0 14px 30px -12px var(--c-shadowStrong);
+  --sh-pill: 0 6px 14px -8px var(--c-shadow);
+  --sh-focus: 0 0 0 2px var(--c-canvas), 0 0 0 4px var(--c-focus);
+  --ease-out: cubic-bezier(.22,1,.36,1);
+  --ease-ios: cubic-bezier(.32,.72,0,1);
+  --ease-inOut: cubic-bezier(.65,0,.35,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+  --dur-press: 280ms;
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
+  --z-tab: 1;
+  --z-sticky: 5;
+  --z-push: 10;
+  --z-nav: 40;
+  --z-dropdown: 50;
+  --z-sheet: 55;
+  --z-dialog: 60;
+  --z-toast: 64;
+  --z-flight: 70;
+  --sp-0: 0px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+  --sp-8: 40px;
+  --sp-9: 48px;
+  --gutter: 18px;
+  --touch: 44px;
+  --fs-title: 22px;
+  --fw-title: 800;
+  --lh-title: 1.45;
+  --fs-head: 16px;
+  --fw-head: 800;
+  --lh-head: 1.5;
+  --fs-body: 14px;
+  --fw-body: 500;
+  --lh-body: 1.75;
+  --fs-cap: 11px;
+  --fw-cap: 700;
+  --lh-cap: 1.6;
+  --fs-num: 24px;
+  --fw-num: 800;
+  --lh-num: 1.45;
+  --font: 'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Tahoma, 'Noto Sans Arabic', sans-serif;
+}
+
+/* ── reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Keeps the page from sliding sideways when a wide table or a long
+     Latin token overflows on a phone. */
+  overflow-x: clip;
+  hanging-punctuation: first last;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  line-height: var(--lh-body);
+  /* Persian: never track letters — spacing breaks the joined script. */
+  letter-spacing: 0;
+  color: var(--c-ink);
+  background-color: var(--c-canvas);
+  background-image:
+    radial-gradient(120% 60% at 50% -10%, var(--c-glow), transparent 70%),
+    linear-gradient(180deg, var(--c-bgTop) 0%, var(--c-bgMid) 45%, var(--c-bgBottom) 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--c-accentText);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+/* `hidden` must win over any component's display rule. */
+[hidden] {
+  display: none !important;
+}
+
+/* ── focus, selection, scrollbars ──────────────────────────── */
+
+/* Keyboard focus only: a ring after every tap on a phone reads as a
+   bug. The colour is a theme token tested at ≥ 3:1 on canvas and card. */
+:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+::selection {
+  background: var(--c-selection);
+  color: inherit;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-divider) transparent;
+}
+
+/* Safari ignores scrollbar-width; give it the same thin bar. */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c-divider);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ── utilities ─────────────────────────────────────────────── */
+
+/* Fixed-width digits so counters and columns do not jiggle. */
+.gz-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hidden visually, read by screen readers. */
+.gz-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Inline Latin run (codes, usernames): isolate so bidi cannot reorder it. */
+.gz-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* ── keyframes (CSS Modules reference them as global(name)) ── */
+
+/* Staggered entry. The travel comes from --rv-y so each list can choose
+   its own without another keyframe. */
+@keyframes revealIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--rv-y, 10px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Skeleton sweep. Moves a background, never layout. */
+@keyframes shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+
+/* CSS fallback shake for places without a spring (e.g. pure-CSS forms).
+   Components use the spring-driven <Shake> instead. */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    transform: translate3d(-8px, 0, 0);
+  }
+  40% {
+    transform: translate3d(7px, 0, 0);
+  }
+  60% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+/* ── reduced motion ────────────────────────────────────────────
+   CSS animations and transitions collapse to (almost) zero here.
+   Springs are handled in the engine (@gazyar/motion), which jumps to
+   the target and still fires onRest — useReducedMotionSync() feeds it
+   the same media query. 0.01ms rather than 0 so `animationend` /
+   `transitionend` still fire for code that waits on them. Spinners
+   keep turning slowly: a frozen spinner looks like a hung app. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-gz-spinner] {
+    animation-duration: 1.6s !important;
+    animation-iteration-count: infinite !important;
+  }
+}

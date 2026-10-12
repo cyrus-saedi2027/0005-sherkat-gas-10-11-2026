@@ -6,7 +6,14 @@ from app.core.deps import DB, CurrentStaff
 from app.core.errors import AppError
 from app.modules.auth import service
 from app.modules.auth.router_common import token_response
-from app.modules.auth.schemas import ChangePasswordIn, OtpVerifyIn, StaffLoginIn, StaffLoginOut, StaffMeOut, TokenOut
+from app.modules.auth.schemas import (
+    ChangePasswordIn,
+    OtpVerifyIn,
+    StaffLoginIn,
+    StaffLoginOut,
+    StaffMeOut,
+    TokenOut,
+)
 from app.modules.staff.models import StaffUser
 
 router = APIRouter(prefix="/auth", tags=["admin:auth"])

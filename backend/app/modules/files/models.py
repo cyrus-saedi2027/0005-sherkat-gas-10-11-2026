@@ -17,7 +17,7 @@ class StoredFile(Base):
     owner_id: Mapped[int | None] = mapped_column(index=True)
     purpose: Mapped[str] = mapped_column(String(24), index=True)
     original_name: Mapped[str | None] = mapped_column(String(255))
-    mime: Mapped[str] = mapped_column(String(64))
+    mime: Mapped[str] = mapped_column(String(128))
     size: Mapped[int]
     sha256: Mapped[str] = mapped_column(String(64), index=True)
     width: Mapped[int | None]

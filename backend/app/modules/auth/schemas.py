@@ -49,7 +49,7 @@ class LoginPasswordIn(BaseModel):
 
 class TokenOut(BaseModel):
     access_token: str
-    token_type: str = "bearer"
+    token_type: str = "bearer"  # noqa: S105 — OAuth2 token type, not a secret
     expires_in: int
     subject_type: str
     subject_id: int

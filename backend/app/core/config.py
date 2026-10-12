@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     sql_echo: bool = False
 
     # Secrets. Dev defaults are deliberately obvious so a prod boot with them fails (see check_prod()).
-    secret_key: str = "dev-insecure-secret-change-me-0123456789abcdef"
+    secret_key: str = "dev-insecure-secret-change-me-0123456789abcdef"  # noqa: S105 — refused in prod by check_prod()
     # Comma-separated Fernet keys, newest first (MultiFernet → key rotation without re-encrypting at once).
     fernet_keys: str = "UoldSfLhBdeLgRa6aUb_InGZLrH0LVQ7UlrMVvjgPEg="
     blind_index_key: str = "dev-insecure-blind-index-key-change-me"

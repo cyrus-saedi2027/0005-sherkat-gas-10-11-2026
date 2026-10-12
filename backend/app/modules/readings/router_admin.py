@@ -17,8 +17,16 @@ from app.modules.files.models import StoredFile
 from app.modules.readings import presenter, service
 from app.modules.readings.models import MeterReading
 from app.modules.readings.reasons import REJECT_REASONS
-from app.modules.readings.schemas import (AdminReadingDetailOut, AdminReadingOut, ApproveIn, CloseIn, FlagOut,
-                                          HistoryPoint, QueueStats, ReasonOut)
+from app.modules.readings.schemas import (
+    AdminReadingDetailOut,
+    AdminReadingOut,
+    ApproveIn,
+    CloseIn,
+    FlagOut,
+    HistoryPoint,
+    QueueStats,
+    ReasonOut,
+)
 from app.modules.regions.models import Region
 from app.modules.regions.service import descendants
 from app.modules.staff.models import StaffUser
@@ -66,7 +74,7 @@ def stats(db: DB, _s: StaffCtx = require(P.READINGS_VIEW)) -> QueueStats:
 def queue(db: DB, p: PageParams = Depends(page_params),
           status: Annotated[str | None, Query(pattern=STATUSES)] = "open",
           region_id: int | None = None, subscription_no: Annotated[str | None, Query(max_length=30)] = None,
-          period_key: Annotated[str | None, Query(pattern=r"^\d{4}-\d{2}$")] = None,
+          period_key: Annotated[str | None, Query(pattern=r"^[0-9]{4}-[0-9]{2}$")] = None,
           date_from: date | None = None, date_to: date | None = None, reviewer_id: int | None = None,
           flagged_only: bool = False, sort: Annotated[str, Query(pattern="^(oldest|newest)$")] = "oldest",
           _s: StaffCtx = require(P.READINGS_VIEW)) -> Page[AdminReadingOut]:

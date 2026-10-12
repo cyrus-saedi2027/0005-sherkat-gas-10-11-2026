@@ -11,7 +11,7 @@ def is_valid_national_code(s: str | None) -> bool:
     if not s:
         return False
     t = re.sub(r"[\s\-]", "", to_ascii_digits(s))
-    if not re.fullmatch(r"\d{10}", t) or len(set(t)) == 1:
+    if not re.fullmatch(r"[0-9]{10}", t) or len(set(t)) == 1:
         return False
     total = sum(int(t[i]) * (10 - i) for i in range(9))
     r = total % 11
@@ -23,9 +23,9 @@ def normalize_iban(s: str | None) -> str | None:
     if not s:
         return None
     t = re.sub(r"[\s\-]", "", to_ascii_digits(s)).upper()
-    if re.fullmatch(r"\d{24}", t):
+    if re.fullmatch(r"[0-9]{24}", t):
         t = "IR" + t
-    return t if re.fullmatch(r"IR\d{24}", t) else None
+    return t if re.fullmatch(r"IR[0-9]{24}", t) else None
 
 
 def is_valid_iban(s: str | None) -> bool:
@@ -46,6 +46,6 @@ def password_problem(pw: str) -> str | None:
         return "رمز عبور باید دست‌کم ۸ نویسه باشد."
     if len(pw) > 128:
         return "رمز عبور بیش از حد طولانی است."
-    if not re.search(r"[A-Za-z؀-ۿ]", pw) or not re.search(r"\d", to_ascii_digits(pw)):
+    if not re.search(r"[A-Za-z؀-ۿ]", pw) or not re.search(r"[0-9]", to_ascii_digits(pw)):
         return "رمز عبور باید هم حرف و هم عدد داشته باشد."
     return None

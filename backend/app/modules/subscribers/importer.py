@@ -46,7 +46,7 @@ CONS_COLS: dict[str, tuple[str, ...]] = {
 }
 SUB_SHEETS = ("مشترکین", "مشترکان", "subscribers")
 CONS_SHEETS = ("مصرف", "سوابق مصرف", "consumption")
-PERIOD_HEADER = re.compile(r"^(\d{4})[-/](\d{1,2})$")
+PERIOD_HEADER = re.compile(r"^([0-9]{4})[-/]([0-9]{1,2})$")
 
 
 @dataclass
