@@ -129,12 +129,7 @@ const DEVICE_ID_RE = /^[A-Za-z0-9-]{8,64}$/;
 export function createDeviceIdGetter(storage: KeyValueStore, randomId: () => string = uuidV4): () => Promise<string> {
   let pending: Promise<string> | null = null;
   const load = async (): Promise<string> => {
-    let existing: string | null = null;
-    try {
-      existing = await storage.get(DEVICE_ID_KEY);
-    } catch {
-      existing = null;
-    }
+    const existing = await storage.get(DEVICE_ID_KEY).catch(() => null);
     // Server column is 64 chars; a corrupted value is replaced, not sent.
     if (existing && DEVICE_ID_RE.test(existing)) return existing;
     const id = randomId();

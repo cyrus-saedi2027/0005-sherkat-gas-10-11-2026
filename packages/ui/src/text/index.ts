@@ -1,0 +1,18 @@
+export {
+  Title,
+  Head,
+  Body,
+  Cap,
+  Num,
+  Lat,
+  Code,
+  Money,
+  Points,
+  type BodyProps,
+  type CapProps,
+  type NumProps,
+  type LatProps,
+  type CodeProps,
+  type MoneyProps,
+  type PointsProps,
+} from "./Text";

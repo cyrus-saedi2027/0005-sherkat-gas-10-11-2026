@@ -1,0 +1,54 @@
+/* ── Pressable ─────────────────────────────────────────────── */
+
+.pressable {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  /* Press feedback is a CSS transition, not a spring: a press is not
+     interruptible, so a spring would buy nothing. */
+  transition: transform var(--dur-press) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
+.pressable[data-press="subtle"] {
+  --press-scale: 0.985;
+}
+.pressable[data-press="normal"] {
+  --press-scale: 0.955;
+}
+.pressable[data-press="firm"] {
+  --press-scale: 0.94;
+}
+
+.pressable[data-pressed] {
+  transform: scale(var(--press-scale, 0.955));
+}
+
+.pressable:disabled,
+.pressable[aria-disabled="true"] {
+  cursor: default;
+  opacity: 0.45;
+}
+
+/* Static wrappers (no onPress) keep the box but not the affordance. */
+.static {
+  cursor: inherit;
+  user-select: auto;
+}
+
+/* ── FocusTrap ─────────────────────────────────────────────── */
+
+/* The container only takes focus as a last resort (nothing tabbable
+   inside); a ring around a whole sheet would be noise. */
+.trap:focus {
+  outline: none;
+}

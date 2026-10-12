@@ -21,7 +21,10 @@ const LETTER = /[A-Za-zؠ-يٮ-ۓەۮۯۺ-ۼۿ]/;
 
 export type PasswordCheck = { ok: true } | { ok: false; reason: string };
 
-/** Same rules and messages as backend validators.password_problem. */
+/** Same rules and messages as backend validators.password_problem, except the
+ *  letter class: the backend's [A-Za-z\u0600-\u06FF] also counts Persian
+ *  digits as letters, so "1234567۱" passes there and fails here (the backend
+ *  should adopt LETTER above). */
 export function isValidPassword(pw: string): PasswordCheck {
   if (pw.length < PASSWORD_MIN) return { ok: false, reason: "رمز عبور باید دست‌کم ۸ نویسه باشد." };
   if (pw.length > PASSWORD_MAX) return { ok: false, reason: "رمز عبور بیش از حد طولانی است." };

@@ -1,0 +1,48 @@
+/* Entry helpers animate only transform and opacity: both composite on
+   the GPU, so a list entering does not re-layout the page. */
+
+.fade {
+  opacity: 0;
+  transform: translate3d(0, var(--fade-y, 6px), 0);
+  transition:
+    opacity var(--fade-dur, 300ms) var(--ease-out) var(--fade-delay, 0ms),
+    transform var(--fade-dur, 300ms) var(--ease-out) var(--fade-delay, 0ms);
+}
+
+.fade[data-on] {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal {
+  animation: global(revealIn) 420ms var(--ease-out) var(--rv-delay, 0ms) both;
+}
+
+.presence {
+  /* the spring writes opacity/transform; this keeps the layer cheap */
+  will-change: opacity, transform;
+}
+
+.presence[data-state="exiting"] {
+  pointer-events: none;
+}
+
+.count {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  unicode-bidi: isolate;
+}
+
+.collapse {
+  overflow: hidden;
+}
+
+/* A margin on the first/last child would escape the measured box and
+   make the animated height stop a few px short, then jump. */
+.collapseInner {
+  display: flow-root;
+}
+
+.shake {
+  display: block;
+}

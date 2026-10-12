@@ -164,3 +164,73 @@ def build(db: Session, staff: StaffCtx, f: Filters):
             series += s
             breakdown.update(b)
     return kpis, series, breakdown
+
+
+@provider(P.CASES_VIEW_ALL)
+def cases_block(db: Session, f: Filters, _s: StaffCtx):
+    from app.modules.cases.models import Case, CaseEstimate
+    from app.modules.cases.service import OPEN_STATUSES
+
+    q = select(func.count()).select_from(Case)
+    if f.region_ids:
+        q = q.where(Case.region_id.in_(f.region_ids))
+    if f.expert_id:
+        q = q.where(Case.ambassador_id == f.expert_id)
+    referred = db.scalar(q.where(Case.created_at >= f.date_from, Case.created_at < f.date_to)) or 0
+    open_n = db.scalar(q.where(Case.status.in_(OPEN_STATUSES))) or 0
+    unassigned = db.scalar(q.where(Case.status == "new", Case.ambassador_id.is_(None))) or 0
+    by_tier = dict(db.execute(q.with_only_columns(Case.tier, func.count()).where(Case.tier.is_not(None)).group_by(Case.tier)).all())
+    by_status = dict(db.execute(q.with_only_columns(Case.status, func.count()).group_by(Case.status)).all())
+    cost_q = select(func.coalesce(func.sum(CaseEstimate.program_share_rial), 0)).join(Case, Case.id == CaseEstimate.case_id) \
+        .where(CaseEstimate.status == "accepted", CaseEstimate.created_at >= f.date_from, CaseEstimate.created_at < f.date_to)
+    if f.region_ids:
+        cost_q = cost_q.where(Case.region_id.in_(f.region_ids))
+    cost = int(db.scalar(cost_q) or 0)
+    series_stmt = select(Case.created_at)
+    if f.region_ids:
+        series_stmt = series_stmt.where(Case.region_id.in_(f.region_ids))
+    return (
+        [Kpi(key="cases_referred", title="پرونده‌های ارجاع‌شده در بازه", value=referred, unit="پرونده", tone="info"),
+         Kpi(key="cases_open", title="پرونده‌های باز", value=open_n, unit="پرونده"),
+         Kpi(key="cases_unassigned", title="پرونده‌های بدون سفیر", value=unassigned, unit="پرونده", tone="warn"),
+         Kpi(key="service_cost_rial", title="هزینهٔ خدمات (سهم طرح)", value=cost, unit="ریال", tone="accent")],
+        [Series(key="cases", title="پرونده‌های جدید", points=daily_series(db, f, Case.created_at, series_stmt))],
+        {"cases_by_tier": [{"key": k, "value": int(v)} for k, v in by_tier.items()],
+         "cases_by_status": [{"key": k, "value": int(v)} for k, v in by_status.items()]},
+    )
+
+
+@provider(P.CASES_VIEW_OWN)
+def my_cases_block(db: Session, f: Filters, s: StaffCtx):
+    from app.modules.cases.models import Case, CaseVisit
+    from app.modules.cases.service import OPEN_STATUSES
+
+    if s.can(P.CASES_VIEW_ALL):
+        return [], [], {}
+    open_n = db.scalar(select(func.count()).where(Case.ambassador_id == s.id, Case.status.in_(OPEN_STATUSES))) or 0
+    now = clock.now()
+    week = db.scalar(select(func.count()).where(CaseVisit.ambassador_id == s.id, CaseVisit.status == "scheduled",
+                                                CaseVisit.scheduled_start >= now,
+                                                CaseVisit.scheduled_start < now + timedelta(days=7))) or 0
+    to_call = db.scalar(select(func.count()).where(Case.ambassador_id == s.id, Case.status == "assigned")) or 0
+    done = db.scalar(select(func.count()).where(Case.ambassador_id == s.id, Case.status == "completed",
+                                                Case.completed_at >= f.date_from, Case.completed_at < f.date_to)) or 0
+    return ([Kpi(key="my_open_cases", title="پرونده‌های باز من", value=open_n, unit="پرونده", tone="info"),
+             Kpi(key="my_to_call", title="منتظر تماس اول", value=to_call, unit="پرونده", tone="warn"),
+             Kpi(key="my_visits_week", title="بازدیدهای ۷ روز آینده", value=week, unit="بازدید"),
+             Kpi(key="my_completed", title="تکمیل‌شده در بازه", value=done, unit="پرونده", tone="ok")], [], {})
+
+
+@provider(P.REFERRALS_VIEW)
+def referrals_block(db: Session, f: Filters, _s: StaffCtx):
+    from app.modules.referrals.models import Referral
+
+    rows = dict(db.execute(select(Referral.status, func.count()).where(Referral.created_at >= f.date_from,
+                                                                       Referral.created_at < f.date_to)
+                           .group_by(Referral.status)).all())
+    total = sum(int(v) for v in rows.values())
+    rewarded = int(rows.get("rewarded", 0))
+    return ([Kpi(key="referrals_valid", title="معرفی‌های معتبر", value=rewarded, unit="معرفی", tone="ok",
+                 hint=f"نرخ تبدیل {round(rewarded / total * 100) if total else 0}٪"),
+             Kpi(key="referrals_suspicious", title="معرفی‌های مشکوک", value=int(rows.get("suspicious", 0)), unit="معرفی", tone="crit")],
+            [], {"referrals_by_status": [{"key": k, "value": int(v)} for k, v in rows.items()]})

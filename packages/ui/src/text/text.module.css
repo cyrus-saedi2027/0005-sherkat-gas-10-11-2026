@@ -1,0 +1,118 @@
+/* ─────────────────────────────────────────────────────────────
+ *  Typography firewall. Persian has no capitals and its letters join:
+ *  letter-spacing breaks the script, so every Persian style sets it to
+ *  0 explicitly (an inherited Latin tracking must not leak in). The
+ *  "eyebrow label" device of Latin designs is rebuilt as a dot + muted
+ *  colour (Cap); tracking survives only on real Latin runs (Lat, Code).
+ *  Line heights stay in the 1.45–1.75 band — Persian ascenders and
+ *  descenders collide at Latin leading.
+ * ───────────────────────────────────────────────────────────── */
+
+.title {
+  font-size: var(--fs-title);
+  font-weight: var(--fw-title);
+  line-height: var(--lh-title);
+  letter-spacing: 0;
+  color: var(--c-ink);
+}
+
+.head {
+  font-size: var(--fs-head);
+  font-weight: var(--fw-head);
+  line-height: var(--lh-head);
+  letter-spacing: 0;
+  color: var(--c-ink);
+}
+
+.body {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  line-height: var(--lh-body);
+  letter-spacing: 0;
+  color: var(--c-inkMuted);
+}
+
+.body[data-tone="ink"] {
+  color: var(--c-ink);
+}
+
+.body[data-tone="faint"] {
+  color: var(--c-inkFaint);
+}
+
+.cap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-cap);
+  font-weight: var(--fw-cap);
+  line-height: var(--lh-cap);
+  letter-spacing: 0;
+  color: var(--c-inkFaint);
+}
+
+.dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 999px;
+  flex: none;
+  background: currentColor;
+}
+
+.dot[data-tone="accent"] { background: var(--c-accent); }
+.dot[data-tone="ok"] { background: var(--c-ok); }
+.dot[data-tone="warn"] { background: var(--c-warn); }
+.dot[data-tone="crit"] { background: var(--c-crit); }
+.dot[data-tone="info"] { background: var(--c-info); }
+.dot[data-tone="attn"] { background: var(--c-attn); }
+.dot[data-tone="reward"] { background: var(--c-reward); }
+.dot[data-tone="neutral"] { background: var(--c-inkFaint); }
+
+.num {
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.num[data-weight="bold"] {
+  font-weight: 800;
+}
+
+.lat {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-size: 0.86em;
+  font-weight: 700;
+  /* Latin only: tracking is correct here and keeps the reference's
+     small-label device alive where it belongs. */
+  letter-spacing: 0.04em;
+}
+
+.code {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
+  font-size: 0.86em;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  padding-inline: 0.35em;
+  padding-block: 0.05em;
+  border-radius: var(--r-badge);
+  background: var(--c-surfaceAlt);
+  color: var(--c-ink);
+}
+
+.money,
+.points {
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.points {
+  color: var(--c-rewardText);
+  font-weight: 800;
+}

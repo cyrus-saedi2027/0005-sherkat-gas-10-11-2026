@@ -1,0 +1,22 @@
+.icon {
+  flex: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Direction-bearing glyphs (chevrons, arrows, logout, list) are drawn
+   for LTR and mirrored in RTL. SVG coordinates do not follow `dir`, so
+   without this "next" would point backwards in the Persian UI.
+   Attribute fallback first, then :dir() which also handles an LTR
+   island inside an RTL page (a Latin code field). */
+[dir="rtl"] .flip {
+  transform: scaleX(-1);
+}
+
+.flip:dir(rtl) {
+  transform: scaleX(-1);
+}
+
+.flip:dir(ltr) {
+  transform: none;
+}
