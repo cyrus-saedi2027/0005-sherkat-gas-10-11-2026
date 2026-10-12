@@ -1,0 +1,71 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  min-inline-size: 0;
+}
+
+.toolbar[data-variant="bar"] {
+  padding-block: 10px;
+  padding-inline: 14px;
+  border-radius: var(--r-row);
+  background: var(--c-surface);
+  border: 1px solid var(--c-hair);
+}
+
+.toolbar[data-sticky] {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-sticky);
+}
+
+/* A plain sticky toolbar still needs a fill, or rows scroll visibly
+   through it. */
+.toolbar[data-sticky][data-variant="plain"] {
+  background: var(--c-canvas);
+  padding-block: 8px;
+}
+
+.title {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  font-size: var(--fs-head);
+  font-weight: var(--fw-head);
+  line-height: var(--lh-head);
+  letter-spacing: 0;
+  color: var(--c-ink);
+}
+
+/* Filters and search take the free space and wrap among themselves. */
+.main {
+  flex: 1 1 240px;
+  min-inline-size: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Actions hug the inline-end (left in RTL) even when there is no
+   middle group to push them there. */
+.actions {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: auto;
+}
+
+/* On a phone the actions get a full line, so the primary button is
+   never squeezed to an icon-sized sliver beside the search field. */
+@media (max-width: 479.98px) {
+  .main {
+    flex-basis: 100%;
+  }
+  .actions {
+    inline-size: 100%;
+    justify-content: flex-end;
+  }
+}
