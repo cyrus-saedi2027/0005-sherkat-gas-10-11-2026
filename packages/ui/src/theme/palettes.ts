@@ -365,8 +365,10 @@ export const TEXT_PAIRS: ReadonlyArray<readonly [K, K]> = [
   ["navActiveInk", "navActive"],
   ["onDark", "deep"],
   ["toastInk", "toast"],
+  // an "accent" Card keeps the normal ink tokens for Body/Cap/KeyValue inside it
   ["ink", "accentWash"],
   ["inkMuted", "accentWash"],
+  ["inkFaint", "accentWash"],
 ];
 
 /** [graphic, surface] pairs that need the 3:1 non-text contrast (WCAG 1.4.11). */

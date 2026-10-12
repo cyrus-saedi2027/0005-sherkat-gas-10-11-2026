@@ -1,0 +1,126 @@
+.kv {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-inline-size: 0;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--c-inkFaint);
+}
+
+.value {
+  margin: 0;
+  min-inline-size: 0;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: var(--c-ink);
+  /* numbers in a column of values line up */
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.value[data-empty] {
+  color: var(--c-inkFaint);
+  font-weight: 600;
+}
+
+.item[data-emphasis] .value {
+  font-size: var(--fs-head);
+}
+
+.hint {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--c-inkFaint);
+}
+
+/* ── leader: label … value, hairline in between ── */
+
+.kv[data-layout="leader"] {
+  gap: 14px;
+}
+
+.kv[data-layout="leader"] .label {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-inline-size: 0;
+}
+
+/* The leader line is the label's ::after (only dt/dd may sit in a
+   <dl> group). It grows into whatever the value leaves free. */
+.kv[data-layout="leader"] .label::after {
+  content: "";
+  flex: 1 1 24px;
+  min-inline-size: 24px;
+  block-size: 1px;
+  background: var(--c-divider);
+}
+
+.kv[data-layout="leader"] .value {
+  flex: 0 1 auto;
+  max-inline-size: 65%;
+  text-align: end;
+}
+
+/* ── split: rows separated by dividers ── */
+
+.kv[data-layout="split"] .item {
+  justify-content: space-between;
+  padding-block: 12px;
+  border-block-end: 1px solid var(--c-hair);
+}
+
+.kv[data-layout="split"] .item:last-child {
+  border-block-end: 0;
+}
+
+.kv[data-layout="split"] .label {
+  flex: none;
+  max-inline-size: 45%;
+}
+
+.kv[data-layout="split"] .value {
+  text-align: end;
+}
+
+/* ── stacked: label above value, responsive columns ── */
+
+.kv[data-layout="stacked"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px 24px;
+}
+
+.kv[data-layout="stacked"] .item {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+}
+
+@media (min-width: 768px) {
+  .kv[data-layout="stacked"][data-columns="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .kv[data-layout="stacked"][data-columns="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .kv[data-layout="stacked"] .item[data-wide] {
+    grid-column: 1 / -1;
+  }
+}
