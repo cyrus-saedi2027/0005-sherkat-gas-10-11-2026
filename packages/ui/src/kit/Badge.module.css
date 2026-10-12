@@ -1,0 +1,134 @@
+/* Chip, Badge, StatusPill — colours come from the global tone variables
+   (--tone-ink/-wash/-solid/-on-solid on [data-gz-tone]), every pair of
+   which is contrast-tested. */
+
+/* ── Chip ── */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  min-block-size: 38px;
+  padding-inline: 14px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-divider);
+  background: var(--c-card);
+  color: var(--c-inkMuted);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0;
+  white-space: nowrap;
+  transition:
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    border-color 200ms var(--ease-out),
+    transform var(--dur-press) var(--ease-out);
+}
+
+.chip[aria-pressed="true"],
+.chip[data-selected] {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+  color: var(--c-accentInk);
+  box-shadow: var(--sh-pill);
+}
+
+.chip[data-gz-tone]:not([data-gz-tone="neutral"]) {
+  background: var(--tone-wash);
+  border-color: transparent;
+  color: var(--tone-ink);
+}
+
+.chip:focus-visible {
+  outline: none;
+  box-shadow: var(--sh-focus);
+}
+
+.sm {
+  min-block-size: 30px;
+  padding-inline: 10px;
+  font-size: 12px;
+}
+
+.remove {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 22px;
+  block-size: 22px;
+  margin-inline-end: -8px;
+  border-radius: var(--r-pill);
+  color: inherit;
+}
+
+@media (hover: hover) {
+  .remove:hover {
+    background: var(--c-surfaceAlt);
+  }
+}
+
+/* ── Badge ── */
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 20px;
+  block-size: 20px;
+  padding-inline: 6px;
+  border-radius: var(--r-badge);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  background: var(--tone-wash);
+  color: var(--tone-ink);
+}
+
+.solid {
+  background: var(--tone-solid);
+  color: var(--tone-on-solid);
+}
+
+.dotOnly {
+  min-inline-size: 9px;
+  inline-size: 9px;
+  block-size: 9px;
+  padding: 0;
+  border-radius: 999px;
+  background: var(--tone-solid);
+}
+
+/* ── StatusPill ── */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  block-size: 26px;
+  padding-inline: 10px;
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  background: var(--tone-wash);
+  color: var(--tone-ink);
+}
+
+.pill .dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  flex: none;
+}
+
+.pill.sm {
+  block-size: 22px;
+  padding-inline: 8px;
+  font-size: 11px;
+}

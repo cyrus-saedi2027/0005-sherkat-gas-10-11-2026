@@ -36,3 +36,17 @@ class SmsOutbox(Timestamped, Base):
     sent_at: Mapped[datetime | None]
     # OTP texts contain the code — wiped after sending so the DB never keeps live codes.
     sensitive: Mapped[bool] = mapped_column(default=False)
+
+
+class Broadcast(Timestamped, Base):
+    """Group message to a segment of subscribers (R46: send messages & notifications)."""
+
+    __tablename__ = "broadcasts"
+    title: Mapped[str] = mapped_column(String(160))
+    body: Mapped[str] = mapped_column(Text, default="")
+    channels: Mapped[list[str]] = mapped_column(JSON, default=list)  # in_app | sms
+    segment: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)  # {region_ids, tiers, eligibility, status}
+    route: Mapped[str | None] = mapped_column(String(120))
+    status: Mapped[str] = mapped_column(String(10), default="sent")
+    recipients: Mapped[int] = mapped_column(default=0)
+    created_by: Mapped[int]

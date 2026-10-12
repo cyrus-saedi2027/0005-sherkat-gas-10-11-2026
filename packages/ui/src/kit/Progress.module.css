@@ -1,0 +1,84 @@
+/* ── Ring ── */
+
+.ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+}
+
+.ring svg {
+  display: block;
+}
+
+.ringTrack {
+  stroke: var(--c-ringTrack);
+}
+
+.ringValue {
+  stroke: var(--tone-solid, var(--c-ring));
+}
+
+.ringValue:not([data-gz-tone]) {
+  stroke: var(--c-ring);
+}
+
+.ringCenter {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--c-ink);
+}
+
+/* ── ProgressBar ── */
+
+.bar {
+  position: relative;
+  inline-size: 100%;
+  block-size: 8px;
+  border-radius: var(--r-pill);
+  background: var(--c-ringTrack);
+  overflow: hidden;
+}
+
+.sm {
+  block-size: 5px;
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--c-accent);
+  transform: scaleX(0);
+  /* Grows from the reading start: the spring writes scaleX only. */
+  transform-origin: left center;
+}
+
+.fill[data-gz-tone] {
+  background: var(--tone-solid);
+}
+
+[dir="rtl"] .fill {
+  transform-origin: right center;
+}
+
+.fill:dir(rtl) {
+  transform-origin: right center;
+}
+
+.fill:dir(ltr) {
+  transform-origin: left center;
+}
+
+.indeterminate .fill {
+  inset-inline-end: auto;
+  inline-size: 40%;
+  transform: none;
+  animation: global(slide) 1.2s var(--ease-inOut) infinite;
+}

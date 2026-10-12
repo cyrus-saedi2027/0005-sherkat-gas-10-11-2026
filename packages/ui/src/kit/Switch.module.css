@@ -1,0 +1,88 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-block-size: var(--touch);
+}
+
+.text {
+  flex: 1;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--c-ink);
+}
+
+.description {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--c-inkFaint);
+}
+
+/* The touch target is 52×44; the visible track is 44×26 — big target,
+   small look. */
+.switch {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  inline-size: 52px;
+  block-size: var(--touch);
+  margin-inline-end: -4px;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  inline-size: 44px;
+  block-size: 26px;
+  padding: 3px;
+  border-radius: var(--r-pill);
+  background: var(--c-switchTrack);
+  transition: background-color 220ms var(--ease-out);
+}
+
+.switch[aria-checked="true"] .track {
+  background: var(--c-accent);
+}
+
+/* Separate knob tokens: night's accent is light, where a white knob
+   would sit at ~2:1. The spring writes transform; colour is CSS. */
+.knob {
+  inline-size: 20px;
+  block-size: 20px;
+  border-radius: var(--r-pill);
+  background: var(--c-knob);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: background-color 220ms var(--ease-out);
+}
+
+.switch[aria-checked="true"] .knob {
+  background: var(--c-knobOn);
+}
+
+.switch:focus-visible {
+  outline: none;
+}
+
+.switch:focus-visible .track {
+  box-shadow: var(--sh-focus);
+}
+
+.sm .track {
+  inline-size: 36px;
+  block-size: 22px;
+}
+
+.sm .knob {
+  inline-size: 16px;
+  block-size: 16px;
+}

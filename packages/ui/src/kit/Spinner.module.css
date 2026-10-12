@@ -1,0 +1,10 @@
+.spinner {
+  display: inline-block;
+  flex: none;
+  color: inherit;
+  animation: global(spin) 0.8s linear infinite;
+}
+
+.track {
+  opacity: 0.22;
+}

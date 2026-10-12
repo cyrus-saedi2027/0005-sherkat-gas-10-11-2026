@@ -76,7 +76,7 @@ def test_full_high_cost_flow_with_consent_and_points(client, db):
     start = datetime(2026, 10, 14, 6, 30, tzinfo=UTC)
     d = client.post(f"{base}/visits", json={"start": start.isoformat(), "end": (start + timedelta(hours=1)).isoformat()}, headers=h).json()
     assert d["status"] == "visit_scheduled" and d["next_visit_at"]
-    cal = client.get(f"/api/v1/admin/cases/calendar?date_from=2026-10-13T00:00:00Z&date_to=2026-10-20T00:00:00Z", headers=h).json()
+    cal = client.get("/api/v1/admin/cases/calendar?date_from=2026-10-13T00:00:00Z&date_to=2026-10-20T00:00:00Z", headers=h).json()
     assert len(cal) == 1 and cal[0]["case_id"] == c.id
     client.post(f"{base}/photos", data={"phase": "before"}, files={"file": ("b.jpg", jpeg_bytes((1, 2, 3)), "image/jpeg")}, headers=h)
     d = client.post(f"{base}/visit-done", json={"outcome": "done"}, headers=h).json()

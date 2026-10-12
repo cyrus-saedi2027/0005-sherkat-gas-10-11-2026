@@ -283,6 +283,61 @@ ol[role="list"] {
   unicode-bidi: isolate;
 }
 
+/* ── tones ───────────────────────────────────────────────────
+   One vocabulary for badges, pills, banners, icon squares: an element
+   with data-gz-tone gets --tone-ink (text on --tone-wash) and
+   --tone-solid / --tone-on-solid. Every pair here is one that
+   theme.test.ts checks at ≥ 4.5:1, so a component that sticks to these
+   four variables cannot ship unreadable status text. */
+[data-gz-tone] {
+  --tone-ink: var(--c-inkMuted);
+  --tone-wash: var(--c-surfaceAlt);
+  --tone-solid: var(--c-deep);
+  --tone-on-solid: var(--c-deepInk);
+}
+[data-gz-tone="accent"] {
+  --tone-ink: var(--c-accentText);
+  --tone-wash: var(--c-accentWash);
+  --tone-solid: var(--c-accent);
+  --tone-on-solid: var(--c-accentInk);
+}
+[data-gz-tone="reward"] {
+  --tone-ink: var(--c-rewardText);
+  --tone-wash: var(--c-rewardWash);
+  --tone-solid: var(--c-reward);
+  --tone-on-solid: var(--c-rewardInk);
+}
+[data-gz-tone="ok"] {
+  --tone-ink: var(--c-ok);
+  --tone-wash: var(--c-okWash);
+  --tone-solid: var(--c-ok);
+  --tone-on-solid: var(--c-onSolid);
+}
+[data-gz-tone="warn"] {
+  --tone-ink: var(--c-warn);
+  --tone-wash: var(--c-warnWash);
+  --tone-solid: var(--c-warn);
+  --tone-on-solid: var(--c-onSolid);
+}
+[data-gz-tone="crit"] {
+  --tone-ink: var(--c-crit);
+  --tone-wash: var(--c-critWash);
+  --tone-solid: var(--c-crit);
+  --tone-on-solid: var(--c-onSolid);
+}
+[data-gz-tone="info"] {
+  --tone-ink: var(--c-info);
+  --tone-wash: var(--c-infoWash);
+  --tone-solid: var(--c-info);
+  --tone-on-solid: var(--c-onSolid);
+}
+[data-gz-tone="attn"] {
+  --tone-ink: var(--c-attn);
+  --tone-wash: var(--c-attnWash);
+  --tone-solid: var(--c-attn);
+  --tone-on-solid: var(--c-onSolid);
+}
+
 /* ── keyframes (CSS Modules reference them as global(name)) ── */
 
 /* Staggered entry. The travel comes from --rv-y so each list can choose
@@ -357,6 +412,17 @@ ol[role="list"] {
   }
   50% {
     opacity: 0.45;
+  }
+}
+
+/* Indeterminate progress bar: a segment travels across the track.
+   inset-inline-start keeps it reading-direction aware. */
+@keyframes slide {
+  from {
+    inset-inline-start: -40%;
+  }
+  to {
+    inset-inline-start: 100%;
   }
 }
 

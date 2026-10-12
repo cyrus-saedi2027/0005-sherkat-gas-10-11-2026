@@ -124,3 +124,11 @@ ROLE_TICKET_UNITS: dict[Role, frozenset[str]] = {
     Role.AMBASSADOR: frozenset({"ambassador"}),
     Role.FINANCE: frozenset({"finance"}),
 }
+
+
+def ticket_units_for(roles: list[str] | tuple[str, ...]) -> frozenset[str]:
+    out: set[str] = set()
+    for r in roles:
+        if r in Role._value2member_map_:
+            out |= ROLE_TICKET_UNITS[Role(r)]
+    return frozenset(out)

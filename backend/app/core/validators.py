@@ -46,6 +46,8 @@ def password_problem(pw: str) -> str | None:
         return "رمز عبور باید دست‌کم ۸ نویسه باشد."
     if len(pw) > 128:
         return "رمز عبور بیش از حد طولانی است."
-    if not re.search(r"[A-Za-z؀-ۿ]", pw) or not re.search(r"[0-9]", to_ascii_digits(pw)):
+    # str.isalpha() is True for Persian/Arabic letters and False for every digit set — same rule as
+    # packages/core (\p{L}); a Unicode block range would wrongly count ۰-۹ as letters.
+    if not any(ch.isalpha() for ch in pw) or not re.search(r"[0-9]", to_ascii_digits(pw)):
         return "رمز عبور باید هم حرف و هم عدد داشته باشد."
     return None

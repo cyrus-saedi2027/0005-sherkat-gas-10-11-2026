@@ -1,0 +1,195 @@
+/* Shared by TextField, TextArea and Select. */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-inline-size: 0;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--c-inkMuted);
+}
+
+.required {
+  color: var(--c-crit);
+  margin-inline-start: 2px;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-block-size: 48px;
+  padding-inline: 14px;
+  border-radius: var(--r-field);
+  background: var(--c-card);
+  /* Focus uses the `focus` token, not the accent wash: a light wash
+     border is indistinguishable from the idle border in day theme. */
+  border: 1.5px solid var(--c-divider);
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.box:focus-within {
+  border-color: var(--c-focus);
+  box-shadow: 0 0 0 3px var(--c-accentWash);
+}
+
+.box[data-invalid] {
+  border-color: var(--c-crit);
+}
+
+.box[data-invalid]:focus-within {
+  box-shadow: 0 0 0 3px var(--c-critWash);
+}
+
+.box[data-disabled] {
+  background: var(--c-surfaceAlt);
+  opacity: 0.7;
+}
+
+.input {
+  flex: 1;
+  min-inline-size: 0;
+  align-self: stretch;
+  border: 0;
+  outline: none;
+  background: none;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--c-ink);
+  /* the whole box is the touch target, not just the text line */
+  min-block-size: 44px;
+}
+
+.input::placeholder {
+  color: var(--c-inkFaint);
+  font-weight: 500;
+  opacity: 1;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+/* LTR fields (mobile, IBAN, codes) read as Latin/number runs. */
+.input[dir="ltr"] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hide the browser's own reveal / clear buttons: ours are consistent. */
+.input::-ms-reveal,
+.input::-ms-clear {
+  display: none;
+}
+.input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.slot {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  color: var(--c-inkFaint);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.action {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: 32px;
+  block-size: 32px;
+  margin-inline-end: -6px;
+  border-radius: var(--r-pill);
+  color: var(--c-inkFaint);
+}
+
+@media (hover: hover) {
+  .action:hover {
+    color: var(--c-ink);
+    background: var(--c-surfaceAlt);
+  }
+}
+
+.hint {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--c-inkFaint);
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--c-crit);
+}
+
+.error > svg {
+  margin-block-start: 1px;
+}
+
+/* ── TextArea ── */
+
+.areaBox {
+  align-items: stretch;
+  padding-block: 10px;
+}
+
+.area {
+  resize: none;
+  /* three lines; with field-sizing the rows attribute no longer sets it */
+  min-block-size: 5.25em;
+  line-height: 1.75;
+  font-weight: 500;
+}
+
+/* Auto-grow without JS where supported; TextArea measures by hand
+   elsewhere (Safari < 26, Firefox). */
+.autoGrow {
+  field-sizing: content;
+  max-block-size: 40vh;
+}
+
+/* ── Select ── */
+
+.selectBox {
+  position: relative;
+  padding-inline: 0;
+}
+
+.select {
+  appearance: none;
+  cursor: pointer;
+  padding-inline: 14px 40px;
+  inline-size: 100%;
+}
+
+.select:invalid,
+.select[data-placeholder] {
+  color: var(--c-inkFaint);
+  font-weight: 500;
+}
+
+.select option {
+  color: var(--c-ink);
+  background: var(--c-card);
+}
+
+.chevron {
+  position: absolute;
+  inset-inline-end: 14px;
+  pointer-events: none;
+  color: var(--c-inkFaint);
+}

@@ -87,9 +87,8 @@ export type Palette = {
   /** unread dots, count badges */
   attn: string;
   attnWash: string;
-  /** solid status fills (badges, toast icons) and their ink */
-  okSolid: string;
-  critSolid: string;
+  /** ink on a solid status fill (a count badge on `attn`, a toast icon
+   *  on `ok`) — the status colours double as fills, tested both ways */
   onSolid: string;
 
   /* ── page background ── */
@@ -202,8 +201,6 @@ const day: Palette = {
   infoWash: "#E2EFFC",
   attn: "#B83A0B",
   attnWash: "#FFEBE0",
-  okSolid: "#0A6B5B",
-  critSolid: "#B0201A",
   onSolid: "#FFFFFF",
 
   bgTop: "#F7F9FD",
@@ -288,8 +285,6 @@ const night: Palette = {
   infoWash: "#12253F",
   attn: "#FFA474",
   attnWash: "#3A2013",
-  okSolid: "#5AD6BB",
-  critSolid: "#FF928A",
   onSolid: "#0A0F1A",
 
   bgTop: "#0D1424",
@@ -364,9 +359,8 @@ export const TEXT_PAIRS: ReadonlyArray<readonly [K, K]> = [
     [t, `${t}Wash` as K] as const,
     [t, "card"] as const,
     [t, "cardAlt"] as const,
+    ["onSolid", t] as const,
   ]),
-  ["onSolid", "okSolid"],
-  ["onSolid", "critSolid"],
   ["navInk", "nav"],
   ["navActiveInk", "navActive"],
   ["onDark", "deep"],

@@ -1,0 +1,68 @@
+.card {
+  display: block;
+  inline-size: 100%;
+  border-radius: var(--r-card);
+  background: var(--c-card);
+  /* Separation comes from the hairline, which costs nothing to paint;
+     a soft shadow alone vanishes on a phone in daylight. */
+  border: 1px solid var(--c-hair);
+  color: var(--c-ink);
+  text-align: start;
+}
+
+.elevated {
+  box-shadow: var(--sh-card);
+}
+
+.accent {
+  background: var(--c-accentWash);
+  border-color: transparent;
+  color: var(--c-accentWashInk);
+}
+
+/* A deep card re-points the ink tokens for its subtree, so Title/Body/
+   Num inside it read correctly without a "dark" prop on each of them.
+   Every re-pointed pair (deepInk, deepInkMuted on deep/deepAlt) is in
+   the contrast test. */
+.deep {
+  background: var(--c-deepGrad);
+  border-color: transparent;
+  --c-ink: var(--c-deepInk);
+  --c-inkMuted: var(--c-deepInkMuted);
+  --c-inkFaint: var(--c-deepInkMuted);
+  --c-accentText: var(--c-deepInk);
+  --c-hair: rgba(255, 255, 255, 0.12);
+  --c-divider: rgba(255, 255, 255, 0.18);
+  --c-surfaceAlt: var(--c-deepAlt);
+  color: var(--c-deepInk);
+}
+
+.pad-none {
+  padding: 0;
+}
+.pad-sm {
+  padding: 12px;
+}
+.pad-md {
+  padding: 16px;
+}
+.pad-lg {
+  padding: 22px;
+}
+
+/* Interactive cards */
+.card:is(button, a) {
+  cursor: pointer;
+}
+
+.card:is(button, a):focus-visible {
+  outline: none;
+  box-shadow: var(--sh-focus);
+}
+
+@media (hover: hover) {
+  .plain:is(button, a):hover,
+  .elevated:is(button, a):hover {
+    border-color: var(--c-divider);
+  }
+}

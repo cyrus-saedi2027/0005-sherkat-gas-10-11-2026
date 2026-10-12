@@ -1,0 +1,84 @@
+.tabs {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-block-end: 1px solid var(--c-hair);
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  min-block-size: var(--touch);
+  padding-inline: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0;
+  white-space: nowrap;
+  color: var(--c-inkMuted);
+  transition: color 200ms var(--ease-out);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--c-accentText);
+  font-weight: 800;
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: -4px;
+  border-radius: 10px;
+}
+
+.stretch .tab {
+  flex: 1;
+  justify-content: center;
+}
+
+/* 1px wide at rest; the spring writes translateX(left) scaleX(width) in
+   physical px (offsetLeft is physical in both directions), so the bar
+   needs no RTL logic. */
+.indicator {
+  position: absolute;
+  inset-block-end: 0;
+  left: 0;
+  inline-size: 1px;
+  block-size: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--c-accent);
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 20px;
+  block-size: 20px;
+  padding-inline: 6px;
+  border-radius: var(--r-badge);
+  font-size: 11px;
+  font-weight: 800;
+  background: var(--c-surfaceAlt);
+  color: var(--c-inkMuted);
+}
+
+.tab[aria-selected="true"] .badge {
+  background: var(--c-accentWash);
+  color: var(--c-accentWashInk);
+}
+
+.panel:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 4px;
+  border-radius: var(--r-card);
+}

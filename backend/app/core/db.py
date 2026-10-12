@@ -105,7 +105,9 @@ def configure(url: str | None = None) -> Engine:
 
         Path(url.removeprefix("sqlite:///")).parent.mkdir(parents=True, exist_ok=True)
     _engine = _make_engine(url)
-    _SessionLocal = sessionmaker(bind=_engine, autoflush=False, expire_on_commit=False)
+    # autoflush: queries in the same request must see rows added earlier in it (e.g. an event
+    # logged a moment ago appearing in the response) — without it they silently do not.
+    _SessionLocal = sessionmaker(bind=_engine, autoflush=True, expire_on_commit=False)
     return _engine
 
 

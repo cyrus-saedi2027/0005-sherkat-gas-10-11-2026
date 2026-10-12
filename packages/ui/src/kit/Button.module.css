@@ -1,0 +1,146 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-block-size: 44px;
+  padding-inline: 18px;
+  border-radius: var(--r-pill);
+  border: 1px solid transparent;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  white-space: nowrap;
+  transition:
+    transform var(--dur-press) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--sh-focus);
+}
+
+.sm {
+  min-block-size: 36px;
+  padding-inline: 14px;
+  font-size: 12.5px;
+  gap: 6px;
+}
+
+.lg {
+  min-block-size: 52px;
+  padding-inline: 24px;
+  font-size: 15px;
+}
+
+.full {
+  display: flex;
+  inline-size: 100%;
+}
+
+/* Primary: the only gradient on a control (rule: gradients in three
+   places only). Ink is tested on both gradient stops. */
+.primary {
+  background: var(--c-accentGrad);
+  color: var(--c-accentInk);
+  box-shadow: var(--sh-pill);
+}
+
+.secondary {
+  background: var(--c-accentWash);
+  color: var(--c-accentWashInk);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--c-inkMuted);
+  border-color: var(--c-divider);
+}
+
+.subtle {
+  background: var(--c-surfaceAlt);
+  color: var(--c-ink);
+}
+
+.danger {
+  background: var(--c-critWash);
+  color: var(--c-crit);
+  border-color: var(--c-hair);
+}
+
+@media (hover: hover) {
+  .ghost:hover:not(:disabled),
+  .subtle:hover:not(:disabled) {
+    border-color: var(--c-divider);
+    background: var(--c-cardAlt);
+  }
+  .primary:hover:not(:disabled) {
+    filter: brightness(1.06);
+  }
+  .secondary:hover:not(:disabled),
+  .danger:hover:not(:disabled) {
+    filter: brightness(0.97);
+  }
+}
+
+/* Loading keeps the label in place (width does not jump) but hides it
+   under the spinner. */
+.loading {
+  cursor: progress;
+}
+
+.loading .label,
+.loading .slot {
+  visibility: hidden;
+}
+
+.spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+.slot {
+  display: inline-flex;
+  flex: none;
+}
+
+.label {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── IconButton ── */
+
+.iconButton {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: var(--touch);
+  block-size: var(--touch);
+  padding: 0;
+  border-radius: var(--r-icon);
+}
+
+.iconButton.sm {
+  inline-size: 36px;
+  block-size: 36px;
+  min-block-size: 36px;
+  border-radius: 12px;
+}
+
+.iconButton.lg {
+  inline-size: 52px;
+  block-size: 52px;
+}
+
+.round {
+  border-radius: var(--r-pill);
+}

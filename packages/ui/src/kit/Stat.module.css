@@ -1,0 +1,83 @@
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-inline-size: 0;
+  padding: 14px 16px;
+  border-radius: var(--r-tile);
+  background: var(--c-card);
+  border: 1px solid var(--c-hair);
+  box-shadow: var(--sh-soft);
+  text-align: start;
+  color: var(--c-ink);
+}
+
+.stat:is(button, a):focus-visible {
+  outline: none;
+  box-shadow: var(--sh-focus);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-inline-size: 0;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  inline-size: 30px;
+  block-size: 30px;
+  border-radius: 10px;
+  background: var(--tone-wash, var(--c-surfaceAlt));
+  color: var(--tone-ink, var(--c-inkMuted));
+}
+
+.label {
+  min-inline-size: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--c-inkMuted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.value {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: var(--fs-num);
+  font-weight: var(--fw-num);
+  line-height: var(--lh-num);
+  letter-spacing: 0;
+  color: var(--c-ink);
+}
+
+.unit {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-inkFaint);
+}
+
+.delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  padding-inline: 8px;
+  block-size: 24px;
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  font-weight: 800;
+  background: var(--tone-wash);
+  color: var(--tone-ink);
+}
+
+.deltaNote {
+  font-weight: 600;
+}

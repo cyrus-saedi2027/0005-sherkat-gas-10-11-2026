@@ -19,10 +19,10 @@ import styles from "./primitives.module.css";
 /** How far it sinks on press: subtle 0.985 (rows, cards), normal 0.955, firm 0.94 (chips, small icons). */
 export type PressDepth = "none" | "subtle" | "normal" | "firm";
 
-type Tag = "button" | "a" | "div" | "span" | "li" | "label";
+export type PressableTag = "button" | "a" | "div" | "span" | "li" | "label" | "section" | "article";
 
 export type PressableProps = Omit<React.HTMLAttributes<HTMLElement>, "onClick"> & {
-  as?: Tag;
+  as?: PressableTag;
   /** Native button type; default "button" so a Pressable never submits a form by accident. */
   type?: "button" | "submit" | "reset";
   href?: string;

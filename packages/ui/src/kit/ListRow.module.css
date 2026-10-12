@@ -1,0 +1,96 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  inline-size: 100%;
+  min-block-size: 62px;
+  padding-block: 10px;
+  padding-inline: 14px;
+  border-radius: var(--r-row);
+  background: var(--c-card);
+  border: 1px solid var(--c-hair);
+  box-shadow: var(--sh-soft);
+  color: var(--c-ink);
+  text-align: start;
+  /* a long nowrap title must ellipsize, not push the row out of frame */
+  overflow: hidden;
+}
+
+.flat {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding-inline: 0;
+}
+
+.row:is(button, a):focus-visible {
+  outline: none;
+  box-shadow: var(--sh-focus);
+}
+
+@media (hover: hover) {
+  .row:is(button, a):hover {
+    border-color: var(--c-divider);
+  }
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: var(--r-icon);
+  background: var(--tone-wash, var(--c-surfaceAlt));
+  color: var(--tone-ink, var(--c-inkMuted));
+}
+
+.text {
+  flex: 1;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--c-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subtitle {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--c-inkFaint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wrap .title,
+.wrap .subtitle {
+  white-space: normal;
+}
+
+.trailing {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--c-inkMuted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.chevron {
+  flex: none;
+  color: var(--c-inkFaint);
+}

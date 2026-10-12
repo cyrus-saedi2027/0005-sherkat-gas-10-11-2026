@@ -1,0 +1,140 @@
+/* Checkbox / Radio: native inputs (keyboard, forms, screen readers for
+   free) with appearance removed and redrawn. The whole row is the
+   label, so the touch target is the row, not the 22px box. */
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-block-size: var(--touch);
+  padding-block: 10px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.choice[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.control {
+  appearance: none;
+  flex: none;
+  display: grid;
+  place-items: center;
+  inline-size: 22px;
+  block-size: 22px;
+  margin: 1px 0 0;
+  border: 1.5px solid var(--c-switchTrack);
+  background: var(--c-card);
+  cursor: inherit;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-press) var(--ease-out);
+}
+
+.control:active {
+  transform: scale(0.92);
+}
+
+.control:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+}
+
+.checkbox {
+  border-radius: 7px;
+}
+
+.radio {
+  border-radius: 999px;
+}
+
+.control:checked,
+.control:indeterminate {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+}
+
+/* The tick is drawn with a mask so it takes the accent's own ink. */
+.checkbox:checked::after,
+.checkbox:indeterminate::after {
+  content: "";
+  inline-size: 14px;
+  block-size: 14px;
+  background: var(--c-accentInk);
+  mask: var(--mark) center / contain no-repeat;
+  animation: global(pop) 220ms var(--ease-out) both;
+}
+
+.checkbox:checked::after {
+  --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.6 4.8L19 7.5'/%3E%3C/svg%3E");
+}
+
+.checkbox:indeterminate::after {
+  --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M6 12h12'/%3E%3C/svg%3E");
+}
+
+.radio:checked::after {
+  content: "";
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: 999px;
+  background: var(--c-accentInk);
+  animation: global(pop) 220ms var(--ease-out) both;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--c-ink);
+}
+
+.description {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--c-inkFaint);
+}
+
+.group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-block-end: 4px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: var(--c-inkMuted);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.options[data-orientation="horizontal"] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 20px;
+}
+
+.groupError {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-crit);
+}

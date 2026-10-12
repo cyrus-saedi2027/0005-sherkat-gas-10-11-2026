@@ -24,6 +24,12 @@ MODULES: list[tuple[str, bool, bool]] = [
     ("referrals", True, True),
     ("content", True, True),
     ("analytics", True, False),
+    # stage 3
+    ("store", True, True),
+    ("finance", False, True),
+    ("tickets", True, True),
+    ("reports", False, True),
+    ("surveys", True, True),
 ]
 
 

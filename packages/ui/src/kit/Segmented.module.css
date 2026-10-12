@@ -1,0 +1,62 @@
+.segmented {
+  position: relative;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  padding: 3px;
+  border-radius: var(--r-pill);
+  background: var(--c-surfaceAlt);
+  isolation: isolate;
+}
+
+.full {
+  display: grid;
+  inline-size: 100%;
+}
+
+/* One column wide: --n is the item count (data, set by the component).
+   The spring writes translate3d(index × 100%) — percent of its own width. */
+.indicator {
+  position: absolute;
+  inset-block: 3px;
+  inset-inline-start: 3px;
+  inline-size: calc((100% - 6px) / var(--n, 2));
+  border-radius: var(--r-pill);
+  background: var(--c-card);
+  box-shadow: var(--sh-pill);
+  z-index: -1;
+}
+
+.item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-block-size: 38px;
+  padding-inline: 14px;
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: 0;
+  white-space: nowrap;
+  color: var(--c-inkMuted);
+  text-align: center;
+  transition: color 200ms var(--ease-out), transform var(--dur-press) var(--ease-out);
+}
+
+.item[aria-checked="true"] {
+  color: var(--c-ink);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: -2px;
+}
+
+.sm .item {
+  min-block-size: 32px;
+  padding-inline: 10px;
+  font-size: 12px;
+}
