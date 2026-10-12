@@ -12,3 +12,4 @@ export * from "./labels";
 export * from "./platform";
 export * from "./api/errors";
 export * from "./api/client";
+export type { S, Schemas, Page, components, paths } from "./api/types";
