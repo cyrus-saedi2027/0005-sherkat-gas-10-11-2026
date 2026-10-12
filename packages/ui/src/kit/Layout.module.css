@@ -1,0 +1,178 @@
+/* ── Stack / Inline ────────────────────────────────────────── */
+
+.stack,
+.inline {
+  display: flex;
+  gap: var(--gap, var(--sp-3));
+  min-inline-size: 0;
+}
+
+.stack {
+  flex-direction: column;
+}
+
+.inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.inline[data-nowrap] {
+  flex-wrap: nowrap;
+}
+
+/* ul/ol used as a Stack: the gap replaces bullets and indent. */
+:is(ul, ol):is(.stack, .inline) {
+  list-style: none;
+  padding: 0;
+}
+
+/* SPACE steps — one rule per step keeps gaps on the scale. Scoped to
+   the layout classes: a bare [data-align] would restyle any element in
+   the app that happens to use the same attribute name. */
+:is(.stack, .inline)[data-gap="0"] {
+  --gap: var(--sp-0);
+}
+:is(.stack, .inline)[data-gap="1"] {
+  --gap: var(--sp-1);
+}
+:is(.stack, .inline)[data-gap="2"] {
+  --gap: var(--sp-2);
+}
+:is(.stack, .inline)[data-gap="3"] {
+  --gap: var(--sp-3);
+}
+:is(.stack, .inline)[data-gap="4"] {
+  --gap: var(--sp-4);
+}
+:is(.stack, .inline)[data-gap="5"] {
+  --gap: var(--sp-5);
+}
+:is(.stack, .inline)[data-gap="6"] {
+  --gap: var(--sp-6);
+}
+:is(.stack, .inline)[data-gap="7"] {
+  --gap: var(--sp-7);
+}
+:is(.stack, .inline)[data-gap="8"] {
+  --gap: var(--sp-8);
+}
+:is(.stack, .inline)[data-gap="9"] {
+  --gap: var(--sp-9);
+}
+
+/* flex-start/flex-end follow the reading direction, so "start" is the
+   right edge in RTL without any mirroring here. */
+:is(.stack, .inline)[data-align="start"] {
+  align-items: flex-start;
+}
+:is(.stack, .inline)[data-align="center"] {
+  align-items: center;
+}
+:is(.stack, .inline)[data-align="end"] {
+  align-items: flex-end;
+}
+:is(.stack, .inline)[data-align="stretch"] {
+  align-items: stretch;
+}
+:is(.stack, .inline)[data-align="baseline"] {
+  align-items: baseline;
+}
+
+:is(.stack, .inline)[data-justify="start"] {
+  justify-content: flex-start;
+}
+:is(.stack, .inline)[data-justify="center"] {
+  justify-content: center;
+}
+:is(.stack, .inline)[data-justify="end"] {
+  justify-content: flex-end;
+}
+:is(.stack, .inline)[data-justify="between"] {
+  justify-content: space-between;
+}
+
+.spacer {
+  flex: 1 1 0;
+  min-inline-size: 0;
+}
+
+/* ── Divider ───────────────────────────────────────────────── */
+
+.divider {
+  flex: none;
+  align-self: stretch;
+  block-size: 1px;
+  background: var(--c-divider);
+  border: 0;
+}
+
+.divider[data-inset="16"] {
+  margin-inline-start: 16px;
+}
+.divider[data-inset="66"] {
+  /* 14px row padding + 40px icon square + 12px gap */
+  margin-inline-start: 66px;
+}
+
+.vertical {
+  block-size: auto;
+  inline-size: 1px;
+  min-block-size: 1em;
+}
+
+.labelled {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--c-inkFaint);
+  font-size: var(--fs-cap);
+  font-weight: var(--fw-cap);
+  line-height: var(--lh-cap);
+  letter-spacing: 0;
+}
+
+.line {
+  flex: 1;
+  block-size: 1px;
+  background: var(--c-divider);
+}
+
+.label {
+  flex: none;
+}
+
+/* Spacing around a horizontal divider, on the SPACE scale. */
+.divider:not(.vertical),
+.labelled {
+  margin-block: var(--dv-space, 0);
+}
+.vertical {
+  margin-inline: var(--dv-space, 0);
+}
+:is(.divider, .labelled)[data-spacing="1"] {
+  --dv-space: var(--sp-1);
+}
+:is(.divider, .labelled)[data-spacing="2"] {
+  --dv-space: var(--sp-2);
+}
+:is(.divider, .labelled)[data-spacing="3"] {
+  --dv-space: var(--sp-3);
+}
+:is(.divider, .labelled)[data-spacing="4"] {
+  --dv-space: var(--sp-4);
+}
+:is(.divider, .labelled)[data-spacing="5"] {
+  --dv-space: var(--sp-5);
+}
+:is(.divider, .labelled)[data-spacing="6"] {
+  --dv-space: var(--sp-6);
+}
+:is(.divider, .labelled)[data-spacing="7"] {
+  --dv-space: var(--sp-7);
+}
+:is(.divider, .labelled)[data-spacing="8"] {
+  --dv-space: var(--sp-8);
+}
+:is(.divider, .labelled)[data-spacing="9"] {
+  --dv-space: var(--sp-9);
+}

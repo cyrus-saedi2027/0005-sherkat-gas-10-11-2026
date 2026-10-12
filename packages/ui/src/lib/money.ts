@@ -1,7 +1,10 @@
 /* Money display. Amounts are stored and transported as integer rials
    (ARCHITECTURE §3); people read tomans. The conversion lives here so no
-   screen ever divides by ten on its own — local until @gazyar/core
-   exports its formatter, then re-export that instead. */
+   screen ever divides by ten on its own. Core's formatToman/formatRial
+   produce the same digits but join the unit with a plain space, which
+   lets a narrow tile wrap «تومان» onto its own line under the number —
+   the UI needs the non-breaking form, so it formats here on top of
+   core's toFa (via ./digits) rather than post-processing core's string. */
 
 import { toFa } from "./digits";
 
